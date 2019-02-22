@@ -1,7 +1,7 @@
 ## Calculate error variances
 
-source("historical_accuracy.R")
-source("polling_average.R")
+source("Code/historical_accuracy.R")
+source("Code/polling_average.R")
 
 ## Compute error variance
 poll_errors <- bind_rows(error_2009, error_2013, error_2015) %>%

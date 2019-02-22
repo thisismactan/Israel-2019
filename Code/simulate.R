@@ -1,5 +1,5 @@
 ## Simulation
-source("error_variance.R")
+source("Code/error_variance.R")
 
 ## Seed it
 set.seed(2019)

@@ -1,12 +1,12 @@
-source("library.R")
+source("Code/library.R")
 
-polls_2009 <- read_xlsx("polls.xlsx", sheet = "2009", range = "A1:L48", col_names = TRUE) %>%
+polls_2009 <- read_xlsx("Data/polls.xlsx", sheet = "2009", range = "A1:L48", col_names = TRUE) %>%
   mutate(date = as.Date(date))
-polls_2013 <- read_xlsx("polls.xlsx", sheet = "2013", range = "A1:K61", col_names = TRUE)  %>%
+polls_2013 <- read_xlsx("Data/polls.xlsx", sheet = "2013", range = "A1:K61", col_names = TRUE)  %>%
   mutate(date = as.Date(date))
-polls_2015 <- read_xlsx("polls.xlsx", sheet = "2015", range = "A1:L101", col_names = TRUE)  %>%
+polls_2015 <- read_xlsx("Data/polls.xlsx", sheet = "2015", range = "A1:L101", col_names = TRUE)  %>%
   mutate(date = as.Date(date))
-results <- read_xlsx("polls.xlsx", sheet = "Results", range = "A1:C34", col_names = TRUE) 
+results <- read_xlsx("Data/polls.xlsx", sheet = "Results", range = "A1:C34", col_names = TRUE) 
 results_2009 <- results %>%
   filter(year(date) %in% 2008:2009)
 results_2013 <- results %>%

@@ -7,7 +7,7 @@ library(reshape2)
 library(tidyverse)
 
 #### PARTY PALETTE ####
-source("party_colors.R")
+source("Code/party_colors.R")
 
 #### CUSTOM FUNCTIONS ####
 logit <- function(x) {

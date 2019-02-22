@@ -3,7 +3,7 @@ source("library.R")
 #### 2019 polling average ####
 election_date <- as.Date("2019-04-09")
 
-polls_2019 <- read_xlsx("polls.xlsx", sheet = "2019", range = "A1:U100", col_names = TRUE) %>%
+polls_2019 <- read_xlsx("Data/polls.xlsx", sheet = "2019", range = "A1:U100", col_names = TRUE) %>%
   mutate(age = as.numeric(today() - as.Date(date) + 2),
          weight = (age < 45)/exp(age^0.3)) %>%
   dplyr::select(date, age, pollster, weight, taal_hadash, balad_raam, meretz, labor, blue_white, kulanu, gesher, likud, 
