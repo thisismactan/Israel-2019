@@ -1,4 +1,4 @@
-source("library.R")
+source("Code/library.R")
 
 #### 2019 polling average ####
 election_date <- as.Date("2019-04-09")
@@ -46,7 +46,7 @@ projected_seats <- poll_average.logit %>%
 
   
 ## Plot
-source("party_colors.R")
+source("Code/party_colors.R")
 
 ggplot(projected_seats, aes(x = party, y = seats, fill = party, label = round(seats, 1))) +
   geom_col() +
@@ -59,7 +59,7 @@ ggplot(projected_seats, aes(x = party, y = seats, fill = party, label = round(se
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank()) +
   labs(title = "Seat projections for the 2019 Israeli Knesset election",
-       subtitle = format(lubridate::today(), "Pre-deadline period"), y = "Seats",
+       subtitle = format(lubridate::today(), "%B %e, %Y"), y = "Seats",
        caption = "Error bars indicate 90% confidence intervals")
 
 ## Over time

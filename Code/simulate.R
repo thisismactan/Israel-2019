@@ -57,6 +57,7 @@ party_seats %>%
 
 party_seats %>%
   melt(variable.name = "party", value.name = "seats") %>%
+  filter(!(party %in% c("zehut", "gesher"))) %>%
   plyr::join(parties_df, by = "party") %>%
   ggplot(aes(x = seats, y = ..density.., fill = party)) +
   geom_histogram(binwidth = 1, col = "black", show.legend = FALSE) +
@@ -101,6 +102,6 @@ ideology_seats %>%
   scale_fill_manual(name = "Bloc", values = c("red", "yellow", "darkturquoise", "blue", "darkgreen", "black"),
                     labels = bloc_labels) +
   lims(x = c(0,75), y = c(0, 0.2)) +
-  labs(title = "Israel 2019 forecast seat distributions", 
+  labs(title = "Projected seat distributions by bloc", 
        subtitle = paste0(month(today(), label = TRUE, abbr = FALSE), " ", day(today()), ", ", year(today())),
        x = "Seats", y = "Probability")

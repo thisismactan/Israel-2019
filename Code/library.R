@@ -1,10 +1,13 @@
-library(GGally)
-library(Hmisc)
-library(lubridate)
-library(mvnfast)
-library(readxl)
-library(reshape2)
-library(tidyverse)
+#### LIBRARIES ####
+if(!require(Hmisc)) {
+  install.packages(c("Hmisc", "lubridate", "mvnfast", "readxl", "reshape2", "tidyverse"))
+}
+require(Hmisc)
+require(lubridate)
+require(mvnfast)
+require(readxl)
+require(reshape2)
+require(tidyverse)
 
 #### PARTY PALETTE ####
 source("Code/party_colors.R")
