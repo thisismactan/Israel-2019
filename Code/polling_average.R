@@ -5,7 +5,7 @@ election_date <- as.Date("2019-04-09")
 
 polls_2019 <- read_xlsx("Data/polls.xlsx", sheet = "2019", range = "A1:U100", col_names = TRUE) %>%
   mutate(age = as.numeric(today() - as.Date(date) + 2),
-         weight = (age < 45)/exp(age^0.3)) %>%
+         weight = (date >= as.Date("2019-02-21"))*(age < 45)/exp(age^0.4)) %>%
   dplyr::select(date, age, pollster, weight, taal_hadash, balad_raam, meretz, labor, blue_white, kulanu, gesher, likud, 
                 yisrael_beiteinu, shas, utj, zehut, new_right, urwp)
 
@@ -63,6 +63,8 @@ ggplot(projected_seats, aes(x = party, y = seats, fill = party, label = round(se
        caption = "Error bars indicate 90% confidence intervals")
 
 ## Over time
+
+# Party
 ggplot(polls_2019.long, aes(x = as.Date(date), y = seats, col = party)) +
   geom_smooth(method = "loess", se = FALSE, span = 0.8) +
   geom_point(alpha = 0.5) +
@@ -70,6 +72,27 @@ ggplot(polls_2019.long, aes(x = as.Date(date), y = seats, col = party)) +
                       values = party_palette[parties2019],
                       labels = party_labels[parties2019]) +
   labs(title = "2019 Israeli Knesset election polls",
+       subtitle = paste0("January 14, 2019 - ", month(today(), label = TRUE, abbr = FALSE), " ", day(today()), ", ", year(today())),
+       x = "Date", y = "Seats") +
+  scale_x_date(date_breaks = "week", limits = c(as.Date("2019-01-16"), as.Date("2019-04-09")), date_labels = "%B %e") +
+  theme(axis.text.x = element_text(angle = 90))
+
+# Bloc
+polls_2019.long %>%
+  mutate(bloc = case_when(party %in% c("meretz", "labor") ~ "Left / Center-left",
+                          party %in% c("blue_white") ~ "Center",
+                          party %in% c("kulanu", "gesher") ~ "Center-right",
+                          party %in% c("likud", "yisrael_beiteinu", "zehut", "new_right", "urwp") ~ "Right",
+                          party %in% c("shas", "utj") ~ "Haredi / Ultra-Orthodox",
+                          party %in% c("taal_hadash", "balad_raam") ~ "Arab parties")) %>%
+  group_by(date, pollster, bloc, weight) %>%
+  summarise(seats = sum(seats)) %>%
+  ggplot(aes(x = as.Date(date), y = seats, col = bloc)) +
+  geom_smooth(method = "loess", se = FALSE, span = 0.8) +
+  geom_point(alpha = 0.5) +
+  scale_colour_manual(name = "Bloc", labels = c("Arab parties", "Center", "Center-right", "Haredi / Ultra-Orthodox", "Left / Center-left", "Right"),
+                      values = c("darkgreen", "goldenrod", "darkturquoise", "black", "red", "blue")) +
+  labs(title = "2019 Israeli Knesset election polls by ideological bloc",
        subtitle = paste0("January 14, 2019 - ", month(today(), label = TRUE, abbr = FALSE), " ", day(today()), ", ", year(today())),
        x = "Date", y = "Seats") +
   scale_x_date(date_breaks = "week", limits = c(as.Date("2019-01-16"), as.Date("2019-04-09")), date_labels = "%B %e") +

@@ -30,6 +30,9 @@ simulations.df <- simulations.seats %>%
          arab = taal_hadash + balad_raam,
          ultraorthodox = shas + utj)
 
+blue_white_largest <- which(simulations.df$blue_white > simulations.df$likud)
+likud_largest <- which(simulations.df$blue_white < simulations.df$likud)
+
 ## By party
 party_seats <- simulations.df %>%
   dplyr::select(-left, -center, -center_right, -right, -ultraorthodox, -arab)
@@ -101,7 +104,7 @@ ideology_seats %>%
   facet_wrap(~bloc, labeller = as_labeller(bloc_labels), scales = "free_x") +
   scale_fill_manual(name = "Bloc", values = c("red", "yellow", "darkturquoise", "blue", "darkgreen", "black"),
                     labels = bloc_labels) +
-  lims(x = c(0,75), y = c(0, 0.2)) +
+  lims(x = c(-1,75)) +
   labs(title = "Projected seat distributions by bloc", 
        subtitle = paste0(month(today(), label = TRUE, abbr = FALSE), " ", day(today()), ", ", year(today())),
        x = "Seats", y = "Probability")
