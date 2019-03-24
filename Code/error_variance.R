@@ -8,7 +8,11 @@ poll_errors <- bind_rows(error_2009, error_2013, error_2015) %>%
   as.tbl() %>%
   mutate(weight = 1/(2019 - year)) %>%
   group_by(party = variable) %>%
-  summarise(variance = Hmisc::wtd.var(value, weight))
+  summarise(sse = sum(weight*(value^2)),
+            total_weight = sum(weight),
+            n = n()) %>%
+  mutate(variance = sse*n/(total_weight*(n-1))) %>%
+  dplyr::select(party, variance)
 
 ## Compute variances on logit scale
 poll_averages_logit <- poll_average.logit %>%
@@ -28,12 +32,13 @@ poll_averages_logit <- poll_average.logit %>%
 means <- poll_averages_logit$vote_logit
 variances <- diag(poll_averages_logit$variance) 
 
-polls_2019.logit_wide <- polls_2019.logit %>%
-  dplyr::select(party, date, pollster, vote_logit) %>%
-  reshape2::dcast(...~party, value.var = "vote_logit") %>%
-  na.omit()
+polls_2019.logit_wide <- polls_2019 %>%
+  dplyr::select(taal_hadash, balad_raam, meretz, labor, blue_white, kulanu, gesher, likud, yisrael_beiteinu, shas, utj, zehut, new_right, urwp) %>%
+  na.omit() %>%
+  mutate_all(function(x) x/120) %>%
+  mutate_all(function(x) pmax(0.025, x)) %>%
+  mutate_all(logit)
 
 party_covariance <- (polls_2019.logit_wide %>%
-  dplyr::select(-date, -pollster) %>%
   as.matrix()) %>%
   cov() + variances

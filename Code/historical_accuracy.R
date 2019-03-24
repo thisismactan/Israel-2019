@@ -42,7 +42,7 @@ error_2009 <- polls_2009.logit %>%
          meretz = meretz - logit(3/120)) %>%
   melt(id.vars = c("date", "pollster")) %>%
   mutate(year = 2009) %>%
-  filter(as.numeric(as.Date(date) - as.Date("2009-02-10")) <= 30,
+  filter(as.numeric(as.Date("2009-02-10") -) <= 30,
          value != -Inf)
 
 error_2013 <- polls_2013.logit %>%
@@ -57,7 +57,7 @@ error_2013 <- polls_2013.logit %>%
          hatnuah = hatnuah - logit(6/120)) %>%
   melt(id.vars = c("date", "pollster")) %>%
   mutate(year = 2013) %>%
-  filter(as.numeric(as.Date(date) - as.Date("2013-01-22")) <= 30,
+  filter(as.numeric(as.Date("2013-01-22") - as.Date(date)) <= 30,
          value != -Inf)
 
 error_2015 <- polls_2015.logit %>%
@@ -73,7 +73,7 @@ error_2015 <- polls_2015.logit %>%
          kulanu = kulanu - logit(10/120)) %>%
   melt(id.vars = c("date", "pollster")) %>%
   mutate(year = 2015) %>%
-  filter(as.numeric(as.Date(date) - as.Date("2015-03-17")) <= 30,
+  filter(as.numeric(as.Date("2015-03-17") - as.Date(date)) <= 30,
          value != -Inf)
 
 #### Plots ####

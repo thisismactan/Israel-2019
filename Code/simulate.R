@@ -10,7 +10,7 @@ simulations.logit <- rmvn(100000, mu = means, sigma = party_covariance)
 ## Do a series of conversions to calculate corresponding seat counts
 simulations.vote <- invlogit(simulations.logit) 
 simulations.vote_scaled <- t(simulations.vote) %>% scale(center = FALSE, scale = rowSums(simulations.vote)) %>% t()
-simulations.threshold <- simulations.vote >= 0.0325
+simulations.threshold <- simulations.vote_scaled >= 0.0325
 simulations.vote_thresholded <- t(simulations.vote_scaled*simulations.threshold) %>%
   scale(center = FALSE, scale = rowSums(simulations.vote_scaled*simulations.threshold)) %>% 
   t()
