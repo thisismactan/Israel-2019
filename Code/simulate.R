@@ -60,12 +60,13 @@ party_seats %>%
 
 party_seats %>%
   melt(variable.name = "party", value.name = "seats") %>%
-  filter(!(party %in% c("zehut", "gesher"))) %>%
+  filter(!(party %in% c("gesher"))) %>%
   plyr::join(parties_df, by = "party") %>%
   ggplot(aes(x = seats, y = ..density.., fill = party)) +
   geom_histogram(binwidth = 1, col = "black", show.legend = FALSE) +
-  facet_wrap(~party, labeller = as_labeller(party_facet_labels)) +
+  facet_wrap(~party, labeller = as_labeller(party_facet_labels), scales = "free_x") +
   scale_fill_manual(name = "Party", values = party_palette[parties2019], labels = party_labels[parties2019]) +
+  lims(x = c(-1, 70)) +
   labs(title = "Projected seat distributions by party", 
        subtitle = paste0(month(today(), label = TRUE, abbr = FALSE), " ", day(today()), ", ", year(today())),
        x = "Seats", y = "Probability")
