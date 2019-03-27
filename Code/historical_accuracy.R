@@ -42,7 +42,7 @@ error_2009 <- polls_2009.logit %>%
          meretz = meretz - logit(3/120)) %>%
   melt(id.vars = c("date", "pollster")) %>%
   mutate(year = 2009) %>%
-  filter(as.numeric(as.Date("2009-02-10") -) <= 30,
+  filter(as.numeric(as.Date("2009-02-10") - as.Date(date)) <= 30,
          value != -Inf)
 
 error_2013 <- polls_2013.logit %>%

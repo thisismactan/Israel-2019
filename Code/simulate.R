@@ -67,7 +67,7 @@ party_seats %>%
   facet_wrap(~party, labeller = as_labeller(party_facet_labels), scales = "free_x") +
   scale_fill_manual(name = "Party", values = party_palette[parties2019], labels = party_labels[parties2019]) +
   lims(x = c(-1, 70)) +
-  labs(title = "Projected seat distributions by party", 
+  labs(title = "Projected seat distributions by party",
        subtitle = paste0(month(today(), label = TRUE, abbr = FALSE), " ", day(today()), ", ", year(today())),
        x = "Seats", y = "Probability")
 
