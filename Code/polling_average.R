@@ -5,7 +5,7 @@ election_date <- as.Date("2019-04-09")
 
 polls_2019 <- read_xlsx("Data/polls.xlsx", sheet = "2019", range = "A1:U100", col_names = TRUE) %>%
   mutate(age = as.numeric(today() - as.Date(date) + 2),
-         weight = (date >= as.Date("2019-02-21"))*(age < 45)/exp(age^0.4)) %>%
+         weight = (date >= as.Date("2019-02-21"))*(age < 45)/exp(age^0.6)) %>%
   dplyr::select(date, age, pollster, weight, taal_hadash, balad_raam, meretz, labor, blue_white, kulanu, gesher, likud, 
                 yisrael_beiteinu, shas, utj, zehut, new_right, urwp)
 
@@ -66,7 +66,7 @@ ggplot(projected_seats, aes(x = party, y = seats, fill = party, label = round(se
 
 # Party
 ggplot(polls_2019.long, aes(x = as.Date(date), y = seats, col = party)) +
-  geom_smooth(method = "loess", se = FALSE, span = 0.8) +
+  geom_smooth(method = "loess", se = FALSE, span = 0.6) +
   geom_point(alpha = 0.5) +
   scale_colour_manual(name = "Party/List",
                       values = party_palette[parties2019],
