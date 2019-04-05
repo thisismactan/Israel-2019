@@ -88,7 +88,7 @@ polls_2019.long %>%
   group_by(date, pollster, bloc, weight) %>%
   summarise(seats = sum(seats)) %>%
   ggplot(aes(x = as.Date(date), y = seats, col = bloc)) +
-  geom_smooth(method = "loess", se = FALSE, span = 0.8) +
+  geom_smooth(method = "loess", se = FALSE, span = 0.6) +
   geom_point(alpha = 0.5) +
   scale_colour_manual(name = "Bloc", labels = c("Arab parties", "Center", "Center-right", "Haredi / Ultra-Orthodox", "Left / Center-left", "Right"),
                       values = c("darkgreen", "goldenrod", "darkturquoise", "black", "red", "blue")) +
